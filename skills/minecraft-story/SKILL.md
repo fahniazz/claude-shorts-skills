@@ -218,7 +218,13 @@ Di root repo harus ada semuanya:
 - tekstur di `public/mc-preview/`, di-stage dari Minecraft Java milik user sendiri (tekstur Mojang jangan di-commit atau dibagikan);
 - `remotion.config.ts` dengan `Config.setChromiumOpenGlRenderer("angle")` (render GPU; software GL kira-kira 20x lebih lambat).
 
-Ada yang tidak ada → **BERHENTI**. Bilang ke user bahwa engine Minecraft tidak ikut di skill ini, lalu tawarkan jalur P1. **Jangan** membangun renderer pengganti seadanya (rumah = satu kotak besar dengan tekstur di-stretch, langit warna polos, dunia seperti pulau melayang): hasilnya tidak akan mirip video contoh.
+Ada yang tidak ada → pakai engine dari repo publik [claude-shorts-skills](https://github.com/fahniazz/claude-shorts-skills), folder `engines/minecraft/` (project Remotion siap pakai, **tanpa tekstur**):
+1. Salin folder itu jadi project kerja, lalu `npm install` (versi paket di `package.json` jangan di-upgrade: `@react-three/postprocessing` yang lebih baru membuat frame hitam).
+2. Tekstur dari Minecraft Java milik user sendiri: `python -I tools/mc_extract.py --jar <versions/<ver>/<ver>.jar>` → `mc-assets/` (tidak di-commit, tidak dibagikan). Butuh Python + Pillow + numpy.
+3. Tes: `python demo/build_demo.py`, lalu `npx remotion render src/index.ts McDemo out/demo.mp4`. Lihat beberapa frame-nya. Rumah, pohon, dan dua figur harus tampil dengan tekstur asli.
+4. Struktur project baru mengikuti engine itu: CLI `npm run mc -- mc-stage|mc-preview|mc-validate`, set di `public/mc-preview/<story>/<set>/`, base `<story>/short` (plan.json + direction.json + voice.wav), satu composition `McShort` per cerita di `src/Root.tsx`. `demo/build_demo.py` adalah contoh lengkap terkecil.
+
+User tidak punya Minecraft Java (tidak ada `.jar`) atau engine gagal dites → **BERHENTI**, jelaskan, lalu tawarkan jalur P1. **Jangan** membangun renderer pengganti seadanya (rumah = satu kotak besar dengan tekstur di-stretch, langit warna polos, dunia seperti pulau melayang): hasilnya tidak akan mirip video contoh.
 
 ### R1 — Kunci VO dulu (setelah GATE 4, sebelum shotlist)
 Di jalur R, Step 7 pindah ke sini, karena setiap cue di shotlist memakai frame kata dari VO.

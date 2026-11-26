@@ -1,3 +1,9 @@
+# Perubahan 2026-11-26 (2): engine Minecraft ikut di repo publik
+
+- Engine render jalur R sekarang ada di repo claude-shorts-skills, folder `engines/minecraft/`: renderer (`src/minecraft/`), validator + stager set voxel (`npm run mc`), `scripts/mccheck`, ekstraktor tekstur, dan demo. **Tanpa tekstur Mojang**: user mengekstrak sendiri dari `.jar` Minecraft Java miliknya.
+- R0: kalau engine tidak ada di project, salin dari `engines/minecraft/`, ekstrak tekstur, render demo. Berhenti dan tawarkan P1 hanya kalau user tidak punya Minecraft Java atau tes engine gagal.
+- Diuji di salinan bersih: `npm install`, ekstrak dari jar 1.21.5, demo, gate 0 FAIL, plant test lolos, render mp4 1080×1920 210 frame dalam 15 s.
+
 # Perubahan 2026-11-26: jalur R (Remotion) jadi default
 
 - SKILL.md punya bagian baru **"Jalur R — Render Remotion tanpa game"** (R0–R7). Ini jalur yang sebenarnya dipakai untuk "The Tapper" (remake) dan "Mined, Not Born": VO dikunci dulu → SHOTLIST satu dunia (W0) → BUILD_PLAN + Wave A (world, fx, actors, infra) → Wave B keying per section dengan gate `scripts/mccheck` → draft + review → suara → final 2K 60 fps + stems + captions.

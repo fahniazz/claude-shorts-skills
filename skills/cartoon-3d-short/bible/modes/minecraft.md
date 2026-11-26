@@ -8,6 +8,12 @@ description: Minecraft environment mode - voxel world from local Minecraft asset
 Same pipeline (SCRIPT.md -> director -> validated plan -> three.js/R3F/Remotion render), but each set is a voxel
 world built only from Minecraft assets. The cast stays **ink 2D billboards**. Animals, mobs, props and the world are 3D.
 
+**Engine:** the renderer, validator, stager and keying gate this file describes are in this repo at
+[`engines/minecraft/`](../../../../engines/minecraft) (a runnable Remotion project). It ships **without textures**:
+extract them from your own Minecraft Java jar with `tools/mc_extract.py` (the `manifest` path is in
+`src/director/config/minecraft.json`). Paths below (`src/minecraft/...`, `npm run director -- mc-*`) are that project's;
+there the CLI is `npm run mc -- mc-validate|mc-stage|mc-preview`.
+
 ## Status
 | Phase | What | State |
 |---|---|---|

@@ -9,7 +9,7 @@
    - Setelah mengubah `agents\*.md` atau memindah folder skill, jalankan `install.mjs` lagi.
 3. Node 18+ (semua script), `ffmpeg/ffprobe` di PATH.
 4. Python + `pip install mcschematic` hanya untuk mode `.schem` (opsional).
-5. Minecraft: dua instance **Java 1.20.1 + Fabric** (`TOOLS.md` §0). **Hanya untuk jalur P1.** Jalur R (default) tidak butuh game, tapi butuh engine Minecraft Remotion di repo (`SKILL.md`, Jalur R, R0).
+5. Minecraft: dua instance **Java 1.20.1 + Fabric** (`TOOLS.md` §0). **Hanya untuk jalur P1.** Jalur R (default) tidak butuh game berjalan, tapi butuh engine Minecraft Remotion (`engines/minecraft/` di repo claude-shorts-skills) dan tekstur yang diekstrak dari `.jar` Minecraft Java milikmu sendiri (`SKILL.md`, Jalur R, R0).
    - `MC-Story Server`: dedicated server lokal + Carpet + WorldEdit, `enable-rcon=true`, world superflat.
    - `MC-Story Client`: Sodium + Iris + BBS + ReplayMod + skin loader, connect ke `localhost`.
 6. Sekali per mesin (ulangi kalau app `.sc` di skill berubah): copy `scripts/mc/scarpet/*.sc` ke `<server>/config/carpet/scripts/`.

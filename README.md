@@ -4,7 +4,7 @@
 
 [![check](https://github.com/fahniazz/claude-shorts-skills/actions/workflows/check.yml/badge.svg)](https://github.com/fahniazz/claude-shorts-skills/actions/workflows/check.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE) [![GitHub stars](https://img.shields.io/github/stars/fahniazz/claude-shorts-skills?style=social)](https://github.com/fahniazz/claude-shorts-skills/stargazers)
 
-Four [Claude Code](https://claude.com/claude-code) skills for making vertical short videos (YouTube Shorts, TikTok, Reels) on your own PC: animated 3D story shorts, word-synced captions, Minecraft short scripts, and code-driven Minecraft story videos. No AI video generator: the picture is rendered with three.js inside [Remotion](https://www.remotion.dev/).
+Four [Claude Code](https://claude.com/claude-code) skills for making vertical short videos (YouTube Shorts, TikTok, Reels) on your own PC: animated 3D story shorts, word-synced captions, Minecraft short scripts, and code-driven Minecraft story videos. The repo also includes the [Minecraft render engine](engines/minecraft) those videos use. No AI video generator: the picture is rendered with three.js inside [Remotion](https://www.remotion.dev/).
 
 ## Made with these skills
 
@@ -33,7 +33,13 @@ Every frame is rendered on a home PC with three.js inside Remotion; no AI video 
 | [`cartoon-3d-short`](skills/cartoon-3d-short) | 55-70 s vertical cartoon story shorts: 2D characters in a 3D world. Script formulas, voice-over, shot plan, camera, acting presets, sound mix, QA review agents and the final render. Looks: painted, PBR, paper diorama, Minecraft voxel. |
 | [`captions`](skills/captions) | Word-synced captions as a separate green-screen (and optional ProRes 4444 alpha) clip for After Effects, timed to the narration and kept clear of the Shorts UI. |
 | [`minecraft-shorts`](skills/minecraft-shorts) | Minecraft short scripts in English and Indonesian with two formulas ("What happens if...?" and the "how you built X" evolution ladder), an in-game test list and a Replay Mod shot list. |
-| [`minecraft-story`](skills/minecraft-story) | 2:15 "In this world / In this town" Minecraft story videos, built code-first: script and originality check, storyboard with a shared `LAYOUT.json` (set bboxes and named anchors), then a parallel production wave of sub-agents (one set-builder per set, a visual director, a camera director). Each agent may only write its own files, enforced by a `PreToolUse` hook; `compile_shots.mjs` merges the layers and catches clipping, cameras inside blocks and subjects outside the Shorts safe zone before anything touches the game. Takes run over RCON + Scarpet, recorded with ReplayMod. Docs are in Indonesian. |
+| [`minecraft-story`](skills/minecraft-story) | 2:15 "In this world / In this town" Minecraft story videos, built code-first: formula analysis, script and originality check, then one of two render paths. Default path (R): the whole video renders in Remotion with the [Minecraft engine](engines/minecraft), so no game runs: VO lock, a one-world shotlist, parallel build agents, per-section keying with a numeric staging gate, review, sound, 2K 60 fps. Optional path (P1): takes in the game over RCON + Scarpet, recorded with ReplayMod, with per-agent file ownership enforced by a `PreToolUse` hook. Docs are in Indonesian. |
+
+## Minecraft engine
+
+[`engines/minecraft`](engines/minecraft) is the voxel renderer behind the Minecraft videos above: blocks, mobs, 70+ acting moves, cameras, water/lava, particles and the post look, drawn with three.js in Remotion. It comes with a set validator/stager, a numeric keying gate and a small demo.
+
+**It ships without any Minecraft textures.** You extract them from your own copy of Minecraft Java Edition (`python -I tools/mc_extract.py --jar <your .jar>`), and they stay on your PC. Quick start and requirements are in [its README](engines/minecraft/README.md).
 
 ## Install
 

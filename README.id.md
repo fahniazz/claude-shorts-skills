@@ -11,6 +11,8 @@ Empat *skill* [Claude Code](https://claude.com/claude-code) untuk bikin video pe
 | [`minecraft-shorts`](skills/minecraft-shorts) | Naskah short Minecraft (Inggris & Indonesia) dengan formula "Apa jadinya kalau...?" dan "cara kamu menemukan X". |
 | [`minecraft-story`](skills/minecraft-story) | Video cerita Minecraft 2:15 "In this world / In this town", dibangun lewat kode dan beberapa agent sekaligus. |
 
+Repo ini juga berisi [**engine Minecraft**](engines/minecraft) yang dipakai video-video Minecraft itu (renderer three.js di Remotion). Engine-nya **tanpa tekstur Minecraft**: kamu ekstrak sendiri dari Minecraft Java milikmu (`python -I tools/mc_extract.py --jar <file .jar>`), dan teksturnya tetap di PC-mu. Cara pakainya ada di [README engine](engines/minecraft/README.md).
+
 Bukan AI video generator: gambarnya di-*render* dengan three.js di dalam [Remotion](https://www.remotion.dev/). Contoh hasilnya ada di [README bahasa Inggris](README.md#made-with-these-skills).
 
 ## Yang perlu disiapkan
