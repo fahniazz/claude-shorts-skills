@@ -9,7 +9,7 @@
    - Setelah mengubah `agents\*.md` atau memindah folder skill, jalankan `install.mjs` lagi.
 3. Node 18+ (semua script), `ffmpeg/ffprobe` di PATH.
 4. Python + `pip install mcschematic` hanya untuk mode `.schem` (opsional).
-5. Minecraft: dua instance **Java 1.20.1 + Fabric** (`TOOLS.md` §0).
+5. Minecraft: dua instance **Java 1.20.1 + Fabric** (`TOOLS.md` §0). **Hanya untuk jalur P1.** Jalur R (default) tidak butuh game, tapi butuh engine Minecraft Remotion di repo (`SKILL.md`, Jalur R, R0).
    - `MC-Story Server`: dedicated server lokal + Carpet + WorldEdit, `enable-rcon=true`, world superflat.
    - `MC-Story Client`: Sodium + Iris + BBS + ReplayMod + skin loader, connect ke `localhost`.
 6. Sekali per mesin (ulangi kalau app `.sc` di skill berubah): copy `scripts/mc/scarpet/*.sc` ke `<server>/config/carpet/scripts/`.
@@ -33,7 +33,7 @@ Tes ini tidak menjalankan Minecraft: app scarpet dan command Carpet hanya teruji
 /minecraft-story
 Mulai project baru: <slug-project>.
 Ide: <ide cerita / "bebas, kasih 5 konsep">.
-Path produksi: P1 (code-driven in-game: Scarpet + BBS + ReplayMod).
+Path produksi: R (render Remotion, tanpa game). Pakai P1 (in-game: Scarpet + BBS + ReplayMod) kalau engine Minecraft tidak ada di repo.
 Script referensi aku taruh di projects/<slug-project>/refs/ (atau aku paste di bawah).
 Jalankan step by step sesuai SKILL.md, berhenti di setiap GATE.
 Durasi wajib 2:15. Transformative, jangan mirip referensi.

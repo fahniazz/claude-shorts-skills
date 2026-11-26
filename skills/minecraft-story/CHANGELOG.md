@@ -1,3 +1,10 @@
+# Perubahan 2026-11-26: jalur R (Remotion) jadi default
+
+- SKILL.md punya bagian baru **"Jalur R — Render Remotion tanpa game"** (R0–R7). Ini jalur yang sebenarnya dipakai untuk "The Tapper" (remake) dan "Mined, Not Born": VO dikunci dulu → SHOTLIST satu dunia (W0) → BUILD_PLAN + Wave A (world, fx, actors, infra) → Wave B keying per section dengan gate `scripts/mccheck` → draft + review → suara → final 2K 60 fps + stems + captions.
+- Step 0 menanyakan jalur; P1 (Scarpet + BBS + ReplayMod) tetap ada sebagai opsi. Step 5–9 hanya untuk P1.
+- R0 menghentikan pekerjaan kalau engine Minecraft (`src/minecraft/`, `scripts/mccheck/`, tekstur, render GPU) tidak ada di repo, supaya Claude tidak membangun renderer pengganti seadanya.
+- Tes: 55 lolos, 0 gagal. Doctor: 0 FAIL.
+
 # Perubahan (audit 2026-11-24)
 
 Tes: `node <skill>/tests/run_tests.mjs` → 54 lolos, 0 gagal. Tes ini tidak menjalankan Minecraft.
