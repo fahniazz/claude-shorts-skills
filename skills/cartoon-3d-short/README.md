@@ -13,7 +13,7 @@ Proven on **The Bridge That Fell for a Song**, a 67 s short about the 1831 Broug
 | `bible/` | Style, characters, environment, camera, and one file per look mode (painted, PBR/diorama, Minecraft) |
 | `references/` | Workflow, rendering, audio, QA, director, lessons |
 | `presets/` | Motion presets and the review rubric (pass = 8.5) |
-| `templates/` | rail (default), bridge, palace, court, diorama, audio, scripts |
+| `templates/` | rail (default), bridge, palace, court, diorama, audio, scripts, `tsconfig.json` |
 | `templates/audio/` | Music, the mix with ducking and loudness (SFX are recorded, never synthesized) |
 | `templates/scripts/` | Stills, side-by-side sheets, shot merge and frame-by-frame QA helpers |
 | `bible/style.md` | The script and visual formula measured from 20 reference shorts |

@@ -1,17 +1,21 @@
 // Still frames of a staged Minecraft set: bundles the Remotion project once and renders the McPreview composition
 // for each camera. GPU (ANGLE) like remotion.config.ts.
-import { mkdirSync, rmSync } from "node:fs";
+import { existsSync, mkdirSync, rmSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-// REMOTION_CHROME=<chrome or chrome-headless-shell path> picks a browser; unset = the one Remotion downloads itself.
-const BROWSER = process.env.REMOTION_CHROME || undefined;
+// Chrome to render with: CHROME_PATH / REMOTION_CHROME if set, else the usual Windows/macOS install, else undefined (Remotion uses its own browser).
+const CHROME_CANDIDATES = [
+  "C:/Program Files/Google/Chrome/Application/chrome.exe",
+  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+];
+const BROWSER = process.env.CHROME_PATH || process.env.REMOTION_CHROME || CHROME_CANDIDATES.find((p) => existsSync(p)) || undefined;
 
 export type StillJob = { stageDir: string; cameras: string[]; outDir: string; markers: boolean; scale: number; frame?: number; repo: string };
 
 export const renderStills = async (job: StillJob): Promise<string[]> => {
   const { bundle } = await import("@remotion/bundler");
   const { renderStill, selectComposition } = await import("@remotion/renderer");
-  const chromiumOptions = { gl: "angle" as const };
+  const chromiumOptions = { gl: (process.env.REMOTION_GL || "angle") as "angle" };
   const serveUrl = await bundle({ entryPoint: join(job.repo, "src", "index.ts"), publicDir: join(job.repo, "public") });
   // bundle() leaves a copy of the project in the temp folder; delete it when done
   try {
