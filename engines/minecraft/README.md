@@ -28,11 +28,12 @@ cd engines/minecraft
 npm install
 
 # 1. textures from YOUR game (reads the jar, writes mc-assets/; never downloads anything)
-python -I tools/mc_extract.py --jar "%APPDATA%\.minecraft\versions\1.21.5\1.21.5.jar"     # Windows
-python -I tools/mc_extract.py --jar ~/.minecraft/versions/1.21.5/1.21.5.jar              # Linux
+python -I tools/mc_extract.py --jar "%APPDATA%\.minecraft\versions\1.21.5\1.21.5.jar"               # Windows
+python3 -I tools/mc_extract.py --jar "$HOME/Library/Application Support/minecraft/versions/1.21.5/1.21.5.jar"  # macOS
+python3 -I tools/mc_extract.py --jar ~/.minecraft/versions/1.21.5/1.21.5.jar                        # Linux
 
 # 2. the demo: a village yard set, two shots, a silent voice track
-python demo/build_demo.py
+python demo/build_demo.py   # use python3 on macOS / Linux
 
 # 3. look at it
 npx remotion studio src/index.ts                                  # composition McDemo

@@ -93,7 +93,7 @@ Ketik `/` untuk melihat daftar skill (misalnya `/cartoon-3d-short`), atau langsu
 
 ## Cara pasang di macOS
 
-> Skill ini dibuat dan dites di Windows 11. Langkah di bawah seharusnya jalan di macOS, tapi **belum pernah dites** di Mac. Kalau ada yang error, tolong laporkan di [issue #5](https://github.com/fahniazz/claude-shorts-skills/issues/5) 🙏
+> Sudah dites di macOS (Apple Silicon / M1 Pro, arm64) untuk `cartoon-3d-short`, `captions`, `minecraft-story`, dan `engines/minecraft`. Kalau ada yang error di Mac lain atau Linux, laporkan di [issue #5](https://github.com/fahniazz/claude-shorts-skills/issues/5) 🙏
 
 Buka **Terminal** (tekan `Cmd + Spasi`, ketik `Terminal`, Enter), lalu jalankan:
 
@@ -102,6 +102,7 @@ Buka **Terminal** (tekan `Cmd + Spasi`, ketik `Terminal`, Enter), lalu jalankan:
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 brew install git node python ffmpeg
+pip3 install pillow numpy
 ```
 
 **2. Pasang Claude Code**, lalu jalankan `claude` sekali dan login
@@ -132,7 +133,12 @@ npm install @remotion/three three @react-three/fiber
 claude
 ```
 
-Di Mac, render memakai browser bawaan Remotion (otomatis diunduh), kecuali kamu mengisi `CHROME_PATH`. Script caption otomatis memakai font Arial Black yang ada di Mac; pakai `--font` kalau mau font lain.
+**Catatan macOS:**
+- **Browser & GL:** Script render otomatis memakai Google Chrome di `/Applications/Google Chrome.app/Contents/MacOS/Google Chrome` kalau terpasang (atau isi `CHROME_PATH`, kalau tidak akan memakai browser bawaan Remotion). Default `REMOTION_GL=angle` jalan normal di Apple Silicon.
+- **Python:** Jalankan script Python dengan `python3` di macOS (script QA/render Node sudah otomatis memilih `python3` di non-Windows, atau bisa diganti lewat `PYTHON`).
+- **TypeScript (`tsconfig.json` untuk template rail):** Project baru dari `create-video` butuh `"resolveJsonModule": true`, `"noUnusedLocals": false`, dan `"exclude": ["remotion.config.ts", "scripts"]` (contoh siap pakai ada di [`skills/cartoon-3d-short/templates/tsconfig.json`](skills/cartoon-3d-short/templates/tsconfig.json)).
+- **Caption:** `captions.py` otomatis memakai Arial Black bawaan macOS; pakai `--font` kalau mau font lain.
+- **Folder sementara:** Opsional atur `REMOTION_TMP=.tmp` agar cache bundle Remotion mudah dibersihkan.
 
 ## Kalau ada masalah
 

@@ -27,10 +27,14 @@ const gate = fs.readFileSync(path.join(gateDir, "fx_gate.md"), "utf8");
 if (!gate.includes("ALL GREEN")) { console.error("FX gate is not green: run scripts/fx_gate.mjs first"); process.exit(1); }
 if (!fs.existsSync(path.join(gateDir, `f${check}_on.png`))) { console.error(`no gate stills for frame ${check}: run fx_gate.mjs --frames ${check},...`); process.exit(1); }
 
-// Chrome to render with: CHROME_PATH if set, else the usual Windows install, else null (Remotion uses its own browser)
-const WIN_CHROME = "C:/Program Files/Google/Chrome/Application/chrome.exe";
-const browserExecutable = process.env.CHROME_PATH || ((await import("node:fs")).existsSync(WIN_CHROME) ? WIN_CHROME : null);
-const chromiumOptions = { gl: "angle" };
+// Chrome to render with: CHROME_PATH if set, else the usual Windows/macOS install, else null (Remotion uses its own browser)
+const CHROME_CANDIDATES = [
+  "C:/Program Files/Google/Chrome/Application/chrome.exe",
+  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+];
+const browserExecutable = process.env.CHROME_PATH || CHROME_CANDIDATES.find((p) => fs.existsSync(p)) || null;
+const chromiumOptions = { gl: process.env.REMOTION_GL || "angle" };
+const PYTHON = process.env.PYTHON || (process.platform === "win32" ? "python" : "python3");
 const serveUrl = await bundle({ entryPoint: path.resolve(process.env.BRIDGE_ENTRY || "src/index.ts"), publicDir: path.resolve("public") });
 const composition = await selectComposition({ serveUrl, id: comp, browserExecutable, chromiumOptions });
 const logs = new Set();
@@ -48,7 +52,7 @@ for (const n of FX) { const y = logs.has(`[FX] ${n} active`); if (!y) ok = false
 const idx = check - (range ? range[0] : 0);
 const vf = path.join(gateDir, `final_f${check}.png`);
 execSync(`ffmpeg -v error -y -i "${out}" -vf "select=eq(n\\,${idx}),scale=540:960:flags=area" -frames:v 1 "${vf}"`);
-const diff = (a, b) => JSON.parse(execSync(`python -I "${path.resolve("scripts/fx_diff.py")}" "${a}" "${b}"`, { encoding: "utf8" }));
+const diff = (a, b) => JSON.parse(execSync(`"${PYTHON}" -I "${path.resolve("scripts/fx_diff.py")}" "${a}" "${b}"`, { encoding: "utf8" }));
 const dOn = diff(vf, path.join(gateDir, `f${check}_on.png`)).mean;
 for (const n of FX) {
   const offPng = path.join(gateDir, `f${check}_no-${n}.png`);

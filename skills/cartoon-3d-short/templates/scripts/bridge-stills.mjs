@@ -8,10 +8,13 @@ import { bundle } from "@remotion/bundler";
 import { renderStill, selectComposition } from "@remotion/renderer";
 import path from "node:path";
 const [prefix, frames, scale = "0.5"] = process.argv.slice(2);
-// Chrome to render with: CHROME_PATH if set, else the usual Windows install, else null (Remotion uses its own browser)
-const WIN_CHROME = "C:/Program Files/Google/Chrome/Application/chrome.exe";
-const browserExecutable = process.env.CHROME_PATH || ((await import("node:fs")).existsSync(WIN_CHROME) ? WIN_CHROME : null);
-const chromiumOptions = { gl: "angle" };
+// Chrome to render with: CHROME_PATH if set, else the usual Windows/macOS install, else null (Remotion uses its own browser)
+const CHROME_CANDIDATES = [
+  "C:/Program Files/Google/Chrome/Application/chrome.exe",
+  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+];
+const browserExecutable = process.env.CHROME_PATH || CHROME_CANDIDATES.find((p) => fs.existsSync(p)) || null;
+const chromiumOptions = { gl: process.env.REMOTION_GL || "angle" };
 const serveUrl = await bundle({ entryPoint: path.resolve(process.env.BRIDGE_ENTRY || "src/index.ts"), publicDir: path.resolve("public") });
 const composition = await selectComposition({ serveUrl, id: process.env.COMP || "TigaJenderal", browserExecutable, chromiumOptions });
 const onBrowserLog = (l) => { if (l.type === "error" || l.type === "warning") console.log(`[${l.type}]`, l.text.slice(0, 300)); };

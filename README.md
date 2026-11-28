@@ -56,7 +56,7 @@ Step-by-step guide for beginners (Windows): [README.id.md](README.id.md) (Indone
 
 ### macOS
 
-> The skills were built and tested on Windows 11. The steps below should work on macOS, but have not been tested there yet: if something breaks, please report it in [issue #5](https://github.com/fahniazz/claude-shorts-skills/issues/5).
+> Tested on macOS (Apple Silicon / M1 Pro, arm64) across `cartoon-3d-short`, `captions`, `minecraft-story` and `engines/minecraft`. Linux is not tested yet — reports welcome in [issue #5](https://github.com/fahniazz/claude-shorts-skills/issues/5).
 
 In Terminal:
 
@@ -64,6 +64,7 @@ In Terminal:
 # 1. Homebrew (skip if you have it), then the base tools
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 brew install git node python ffmpeg
+pip3 install pillow numpy
 
 # 2. Claude Code (run `claude` once and log in)
 npm install -g @anthropic-ai/claude-code
@@ -80,14 +81,21 @@ npm install @remotion/three three @react-three/fiber
 claude
 ```
 
-Rendering uses Remotion's own browser unless you set `CHROME_PATH`, and the caption script picks Arial Black (or DejaVu Sans Bold on Linux) by itself; pass `--font` to use another font.
+**macOS notes:**
+- **Browser & GL:** Render scripts auto-detect Google Chrome at `/Applications/Google Chrome.app/Contents/MacOS/Google Chrome` (or set `CHROME_PATH`, otherwise Remotion uses its own browser). `REMOTION_GL=angle` is the default and works on Apple Silicon.
+- **Python:** Use `python3` when running Python scripts directly on macOS (the render/gate scripts already default to `python3` on non-Windows; override with `PYTHON`).
+- **TypeScript config (rail template):** A fresh `create-video` project needs `"resolveJsonModule": true`, `"noUnusedLocals": false`, and `"exclude": ["remotion.config.ts", "scripts"]` in `tsconfig.json` (ready-to-use copy in [`skills/cartoon-3d-short/templates/tsconfig.json`](skills/cartoon-3d-short/templates/tsconfig.json)).
+- **Captions:** `captions.py` picks `/System/Library/Fonts/Supplemental/Arial Black.ttf` automatically; pass `--font` to use another font.
+- **Temp folder:** Optionally set `REMOTION_TMP=.tmp` so Remotion bundle caches stay easy to clean up.
 
 ## Settings
 
 | Variable | Used for |
 |---|---|
 | `REMOTION_TMP` | Temp folder for Remotion bundles; put it on a big drive (defaults to the system temp folder). |
-| `CHROME_PATH` | Optional Chrome/Chromium for rendering. If unset, the scripts use Chrome's usual Windows install when it exists, otherwise Remotion's own downloaded browser. |
+| `CHROME_PATH` | Optional Chrome/Chromium for rendering. If unset, the scripts use Chrome's usual Windows or macOS install when it exists, otherwise Remotion's own downloaded browser. |
+| `REMOTION_GL` | Optional Chromium OpenGL renderer (`angle` by default; e.g. `swangle` if there is no usable GPU). |
+| `PYTHON` | Optional Python executable called by Node QA/render scripts (defaults to `python` on Windows, `python3` on macOS/Linux). |
 | `ELEVENLABS_API_KEY` | Optional AI voice (`templates/scripts/eleven_voice.py`). Put it in your project's `.env`; never commit it. |
 | `HF_CACHE_DIR` | Optional cache folder for the faster-whisper model used for word timings. |
 | `<ASSETS_DIR>` | In the docs, the folder where you keep your own asset kits (for example [Kenney](https://kenney.nl/) CC0 models). |
